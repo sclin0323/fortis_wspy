@@ -5,7 +5,7 @@ class FortinetUtil:
                 return 'data..................'
 
         def checkFortinetParameters(self, request):
-                print 'checkFortinetParameters'
+                #print 'checkFortinetParameters'
                 if not request.GET.get('ip'):
                         return {
                                 "status": False,
