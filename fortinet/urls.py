@@ -7,6 +7,8 @@ urlpatterns = [
 
     url(r'testFortinet/$', views.testFortinet, name='testFortinet'),
 
+    url(r'reenableSystemInterface/$', views.reenableSystemInterface, name='reenableSystemInterface'),
+
     url(r'showConfigUserDeviceGroups/$', views.showConfigUserDeviceGroups, name='showConfigUserDeviceGroups'),
 
     url(r'appendConfigUserDeviceGroups/$', views.appendConfigUserDeviceGroups, name='appendConfigUserDeviceGroups'),

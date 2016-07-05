@@ -20,6 +20,24 @@ class ParamikoClient:
 
                 return {"status": True, "data" : result }
 
+	def reenableSystemInterface(self, fortinetParameters):
+		hostName = fortinetParameters['ip']
+                port = int(fortinetParameters['port'])
+                userName = fortinetParameters['userName']
+                password = fortinetParameters['password']
+
+		ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
+
+		stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless \n config system interface \n edit port34 \n set device-identification disable \n set device-identification enable \n end \n exit \n')
+                result = []
+                for line in stdout:
+                        result.append(line)
+                ssh.close()
+
+                return {"status": True, "data" : result }
+
 	def unselectConfigUserDeviceGroups(self, fortinetParameters):
 		hostName = fortinetParameters['ip']
                 port = int(fortinetParameters['port'])
