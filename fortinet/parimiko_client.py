@@ -1,4 +1,5 @@
 import paramiko
+import logging
 
 class ParamikoClient:
 
@@ -31,7 +32,6 @@ class ParamikoClient:
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
                 ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
 
-		print '[command#] conf vdom \n edit wireless \n config user device-group \n edit '+groupName+' \n unselect member '+deviceName+' \n next \n end \n end \n exit \n'
                 stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless \n config user device-group \n edit '+groupName+' \n unselect member '+deviceName+' \n next \n end \n end \n exit \n')
                 result = []
                 for line in stdout:
@@ -52,8 +52,6 @@ class ParamikoClient:
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
                 ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
 
-		
-		print '[command#] conf vdom \n edit wireless \n config user device \n delete '+deviceName+' \n end \n end \n exit'
                 stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless \n config user device \n delete '+deviceName+' \n end \n end \n exit')
                 result = []
                 for line in stdout:
@@ -75,8 +73,7 @@ class ParamikoClient:
 		ssh = paramiko.SSHClient()
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
                 ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
-		
-		print '[command#] conf vdom \n edit wireless \n config user device-group \n edit '+groupName+' \n append member '+deviceName+' \n next \n end \n end \n exit \n'
+	
 		stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless \n config user device-group \n edit '+groupName+' \n append member '+deviceName+' \n next \n end \n end \n exit \n')
                 result = []
                 for line in stdout:
@@ -95,19 +92,10 @@ class ParamikoClient:
                 deviceName = fortinetParameters['deviceName']
                 macAddress = fortinetParameters['macAddress']
 
-                print hostName
-                print port
-                print userName
-                print password
-                print deviceName
-                print macAddress
-
 		ssh = paramiko.SSHClient()
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
                 ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
 
-                #stdin, stdout, stderr = ssh.exec_command('get system status')
-		print '[command#] conf vdom \n edit wireless \n config user device \n edit '+deviceName+' \n set mac '+macAddress+' \n next \n end \n'
                 stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless \n config user device \n edit '+deviceName+' \n set mac '+macAddress+' \n next \n end \n')
                 result = []
                 for line in stdout:
