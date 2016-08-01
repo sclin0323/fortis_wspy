@@ -29,6 +29,40 @@ def testFortinet(request):
         print response
         return JsonResponse(response)
 
+def showUserDeviceByUserDevice(request):
+	logger.info('===================================== [REQUEST] =====================================')
+        logger.info(request)
+        client = ParamikoClient()
+        fortinetUtil = FortinetUtil()
+
+        # Check Fortinet Parameters 
+        checkResult = fortinetUtil.checkFortinetParameters(request)
+        if checkResult['status'] == False:
+                return JsonResponse(checkResult)
+
+        checkResult['message']['deviceName'] = request.GET.get('deviceName')
+
+        response = client.showUserDeviceByUserDevice(checkResult['message'])
+        logger.info(JsonResponse(response))
+        return JsonResponse(response)
+
+def showUserDeviceGroupByUserDeviceGroup(request):
+	logger.info('===================================== [REQUEST] =====================================')
+        logger.info(request)
+        client = ParamikoClient()
+        fortinetUtil = FortinetUtil()
+
+	# Check Fortinet Parameters 
+        checkResult = fortinetUtil.checkFortinetParameters(request)
+        if checkResult['status'] == False:
+                return JsonResponse(checkResult)
+
+        checkResult['message']['groupName'] = request.GET.get('groupName')
+
+        response = client.showUserDeviceGroupByUserDeviceGroup(checkResult['message'])
+        logger.info(JsonResponse(response))
+        return JsonResponse(response)
+
 def reenableSystemInterface(request):
 	logger.info('===================================== [REQUEST] =====================================')
         logger.info(request)

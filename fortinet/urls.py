@@ -21,5 +21,9 @@ urlpatterns = [
 
     url(r'getSystemStatus/$', views.getSystemStatus, name='getSystemStatus'),
 
-    url(r'showUserDevices/$', views.showUserDevices, name='showUserDevices')
+    url(r'showUserDevices/$', views.showUserDevices, name='showUserDevices'),
+
+    url(r'showUserDeviceByUserDevice/$', views.showUserDeviceByUserDevice, name='showUserDeviceByUserDevice'),
+
+    url(r'showUserDeviceGroupByUserDeviceGroup/$', views.showUserDeviceGroupByUserDeviceGroup, name='showUserDeviceGroupByUserDeviceGroup')
 ]
