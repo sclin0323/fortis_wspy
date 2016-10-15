@@ -1,5 +1,8 @@
 import paramiko
 import logging
+LOG_FILENAME = '/var/log/fortis-django.log'
+logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class ParamikoClient:
 
@@ -160,6 +163,70 @@ class ParamikoClient:
 
                 return {"status": True, "data" : result }
 
+	def editConfigUserLocal(self, fortinetParameters):
+		print fortinetParameters
+                hostName = fortinetParameters['ip']
+                port = int(fortinetParameters['port'])
+                userName = fortinetParameters['userName']
+                password = fortinetParameters['password']
+                account = fortinetParameters['account']
+                userPassword = fortinetParameters['userPassword']
+
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
+
+
+                stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless-0 \n config user local \n edit '+account+' \n set type password \n set passwd '+userPassword+' \n next \n end \n')
+                result = []
+                for line in stdout:
+                        result.append(line)
+                ssh.close()
+
+                return {"status": True, "data" : result }
+
+	def deleteConfigUserLocal(self, fortinetParameters):
+                print fortinetParameters
+                hostName = fortinetParameters['ip']
+                port = int(fortinetParameters['port'])
+                userName = fortinetParameters['userName']
+                password = fortinetParameters['password']
+                account = fortinetParameters['account']
+
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
+
+
+                stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless-0 \n config user local \n delete '+account+' \n end \n end \n exit \n')
+                result = []
+                for line in stdout:
+                        result.append(line)
+                ssh.close()
+
+                return {"status": True, "data" : result }
+
+	def editConfigUserGroup(self, fortinetParameters):
+                print fortinetParameters
+                hostName = fortinetParameters['ip']
+                port = int(fortinetParameters['port'])
+                userName = fortinetParameters['userName']
+                password = fortinetParameters['password']
+                account = fortinetParameters['account']
+                userGroup = fortinetParameters['userGroup']
+
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
+
+                stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless-0 \n config user group \n edit '+userGroup+' \n append member '+account+' \n next \n end \n')
+                result = []
+                for line in stdout:
+                        result.append(line)
+                ssh.close()
+
+                return {"status": True, "data" : result }
+
         def showConfigUserDevices(self, fortinetParameters):
                 hostName = fortinetParameters['ip']
                 port = int(fortinetParameters['port'])
@@ -196,3 +263,49 @@ class ParamikoClient:
                         ssh.close()
 
                         return {"status": True, "data" : result }
+
+
+	# Add
+        def appendConfigUserGroup(self, fortinetParameters):
+                print fortinetParameters
+                hostName = fortinetParameters['ip']
+                port = int(fortinetParameters['port'])
+                userName = fortinetParameters['userName']
+                password = fortinetParameters['password']
+
+                memberName = fortinetParameters['memberName']
+                groupName = fortinetParameters['groupName']
+
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
+
+                stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless-0 \n config user group \n edit '+groupName+' \n append member '+memberName+' \n next \n end \n end \n exit \n')
+                result = []
+                for line in stdout:
+                        result.append(line)
+                ssh.close()
+
+                return {"status": True, "data" : result }
+
+	def unselectConfigUserGroup(self, fortinetParameters):
+                hostName = fortinetParameters['ip']
+                port = int(fortinetParameters['port'])
+                userName = fortinetParameters['userName']
+                password = fortinetParameters['password']
+                memberName = fortinetParameters['memberName']
+                groupName = fortinetParameters['groupName']
+
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
+
+                stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless-0 \n config user group \n edit '+groupName+' \n unselect member '+memberName+' \n next \n end \n end \n exit \n')
+                result = []
+                for line in stdout:
+                        result.append(line)
+                ssh.close()
+
+                return {"status": True, "data" : result }
+
+	

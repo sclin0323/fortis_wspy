@@ -30,7 +30,7 @@ def testFortinet(request):
         return JsonResponse(response)
 
 def showUserDeviceByUserDevice(request):
-	logger.info('===================================== [REQUEST] =====================================')
+	logger.info('================================== [REQUEST] =====================================')
         logger.info(request)
         client = ParamikoClient()
         fortinetUtil = FortinetUtil()
@@ -182,4 +182,95 @@ def getSystemStatus(request):
 
 	response = client.getSystemStatus(checkResult['message'])
 	logger.info(JsonResponse(response))
+        return JsonResponse(response)
+
+def editConfigUserLocal(request):
+        logger.info('===================================== [REQUEST] =====================================')
+        logger.info(request)
+        client = ParamikoClient()
+        fortinetUtil = FortinetUtil()
+
+        # Check Fortinet Parameters 
+        checkResult = fortinetUtil.checkFortinetParameters(request)
+        if checkResult['status'] == False:
+                return JsonResponse(checkResult)
+
+	checkResult['message']['account'] = request.GET.get('account')
+        checkResult['message']['userPassword'] = request.GET.get('userPassword')
+
+        response = client.editConfigUserLocal(checkResult['message'])
+
+        logger.info(JsonResponse(response))
+        return JsonResponse(response)
+
+def deleteConfigUserLocal(request):
+        logger.info('===================================== [REQUEST] =====================================')
+        logger.info(request)
+        client = ParamikoClient()
+        fortinetUtil = FortinetUtil()
+
+        # Check Fortinet Parameters 
+        checkResult = fortinetUtil.checkFortinetParameters(request)
+        if checkResult['status'] == False:
+                return JsonResponse(checkResult)
+
+        checkResult['message']['account'] = request.GET.get('account')
+
+        response = client.deleteConfigUserLocal(checkResult['message'])
+        logger.info(JsonResponse(response))
+        return JsonResponse(response)
+
+def editConfigUserGroup(request):
+        logger.info('===================================== [REQUEST] =====================================')
+        logger.info(request)
+        client = ParamikoClient()
+        fortinetUtil = FortinetUtil()
+
+        # Check Fortinet Parameters 
+        checkResult = fortinetUtil.checkFortinetParameters(request)
+        if checkResult['status'] == False:
+                return JsonResponse(checkResult)
+
+	checkResult['message']['account'] = request.GET.get('account')
+        checkResult['message']['userGroup'] = request.GET.get('userGroup')
+
+        response = client.editConfigUserGroup(checkResult['message'])
+        logger.info(JsonResponse(response))
+        return JsonResponse(response)
+
+def appendConfigUserGroup(request):
+        logger.info('===================================== [REQUEST] =====================================')
+        logger.info(request)
+        client = ParamikoClient()
+        fortinetUtil = FortinetUtil()
+
+         # Check Fortinet Parameters 
+        checkResult = fortinetUtil.checkFortinetParameters(request)
+        if checkResult['status'] == False:
+                return JsonResponse(checkResult)
+
+        checkResult['message']['memberName'] = request.GET.get('memberName')
+        checkResult['message']['groupName'] = request.GET.get('groupName')
+
+        response = client.appendConfigUserGroup(checkResult['message'])
+        logger.info(JsonResponse(response))
+        return JsonResponse(response)
+
+
+def unselectConfigUserGroup(request):
+        logger.info('===================================== [REQUEST] =====================================')
+        logger.info(request)
+        client = ParamikoClient()
+        fortinetUtil = FortinetUtil()
+
+         # Check Fortinet Parameters 
+        checkResult = fortinetUtil.checkFortinetParameters(request)
+        if checkResult['status'] == False:
+                return JsonResponse(checkResult)
+
+        checkResult['message']['memberName'] = request.GET.get('memberName')
+        checkResult['message']['groupName'] = request.GET.get('groupName')
+
+        response = client.unselectConfigUserGroup(checkResult['message'])
+        logger.info(JsonResponse(response))
         return JsonResponse(response)

@@ -25,5 +25,15 @@ urlpatterns = [
 
     url(r'showUserDeviceByUserDevice/$', views.showUserDeviceByUserDevice, name='showUserDeviceByUserDevice'),
 
-    url(r'showUserDeviceGroupByUserDeviceGroup/$', views.showUserDeviceGroupByUserDeviceGroup, name='showUserDeviceGroupByUserDeviceGroup')
+    url(r'showUserDeviceGroupByUserDeviceGroup/$', views.showUserDeviceGroupByUserDeviceGroup, name='showUserDeviceGroupByUserDeviceGroup'),
+
+    url(r'editConfigUserLocal/$', views.editConfigUserLocal, name='editConfigUserLocal'),
+
+    url(r'deleteConfigUserLocal/$', views.deleteConfigUserLocal, name='deleteConfigUserLocal'),   
+
+    url(r'editConfigUserGroup/$', views.editConfigUserGroup, name='editConfigUserGroup'),
+
+    url(r'appendConfigUserGroup/$', views.appendConfigUserGroup, name='appendConfigUserGroup'),
+
+    url(r'unselectConfigUserGroup/$', views.unselectConfigUserGroup, name='unselectConfigUserGroup')
 ]
