@@ -4,15 +4,26 @@ from django.http import JsonResponse
 from .parimiko_client import ParamikoClient
 from .fortinet_util import FortinetUtil
 
-#import logging
-#logging.basicConfig()
-#logger = logging.getLogger(__name__)
 import logging
 LOG_FILENAME = '/var/log/fortis-django.log'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
 # Create your views here.
+
+def sendFortinetCommand(request):
+	logger.info('================================== [REQUEST] =====================================')
+	logger.info(request)
+
+	hostname = request.GET.get('hostname')
+	port = int(request.GET.get('port'))
+	username = request.GET.get('username')
+	password = request.GET.get('password')
+	command = request.GET.get('command')
+
+	client = ParamikoClient()
+	response = client.sendFortinetCommand(hostname, port, username, password, command)
+	logger.info(JsonResponse(response))
+	return JsonResponse(response)
 
 def index(request):
         print 123 
@@ -24,6 +35,8 @@ def index(request):
         return JsonResponse({'foo':'bar'})
 
 def testFortinet(request):
+	logger.info('================================== [REQUEST] =====================================')
+        logger.info(request)
         client = ParamikoClient()
         response = client.testFortinet()
         print response

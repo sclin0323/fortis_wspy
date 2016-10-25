@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
 
+    url(r'sendFortinetCommand/$', views.sendFortinetCommand, name='sendFortinetCommand'),
+
     url(r'testFortinet/$', views.testFortinet, name='testFortinet'),
 
     url(r'reenableSystemInterface/$', views.reenableSystemInterface, name='reenableSystemInterface'),

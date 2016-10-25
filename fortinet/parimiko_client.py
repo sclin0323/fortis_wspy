@@ -6,6 +6,18 @@ logger = logging.getLogger(__name__)
 
 class ParamikoClient:
 
+	def sendFortinetCommand(self, hostname, port, username, password, command):
+		ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(hostname=hostname, port=port, username=username, password=password, timeout=3.0)
+		stdin, stdout, stderr = ssh.exec_command(command)
+                result = []
+                for line in stdout:
+                        result.append(line)
+                ssh.close()
+
+		return {"status": True, "data" : result } 
+
         def test(self):
                 print 'test....'
                 return 'data..................'
