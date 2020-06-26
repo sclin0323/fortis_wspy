@@ -167,7 +167,7 @@ class ParamikoClient:
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
                 ssh.connect(hostname=hostName, port=port, username=userName, password=password, timeout=3.0)
 
-                stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless-0 \n config user device \n edit '+deviceName+' \n set mac '+macAddress+' \n next \n end \n')
+                stdin, stdout, stderr = ssh.exec_command('conf vdom \n edit wireless-0 \n config user device \n edit '+deviceName+' \n set mac '+macAddress+' \n set type other-network-device \n next \n end \n')
                 result = []
                 for line in stdout:
                         result.append(line)
